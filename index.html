@@ -256,6 +256,49 @@
     .price-block{padding:40px 20px;}
   }
   :focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+  /* Sticky Bottom Bar */
+
+.sticky-buy{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:75px;
+background:#111;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+z-index:9999;
+border-top:1px solid #333;
+box-shadow:0 -10px 30px rgba(0,0,0,.35);
+}
+
+.sticky-price{
+font-size:30px;
+font-weight:700;
+color:#fff;
+}
+
+.sticky-price .old{
+text-decoration:line-through;
+font-size:18px;
+color:#888;
+margin-right:10px;
+}
+
+.sticky-btn{
+background:#ff4d8d;
+padding:14px 28px;
+border-radius:10px;
+font-weight:bold;
+color:#fff;
+text-decoration:none;
+}
+
+body{
+padding-bottom:90px;
+}
 </style>
 </head>
 <body>
@@ -449,6 +492,17 @@
     });
   });
 </script>
+<div class="sticky-buy">
 
+<div class="sticky-price">
+<span class="old">₹799</span>
+₹399
+</div>
+
+<a href="https://superprofile.bio/vp/1000--social-media-templates-bundle---instant-download" class="sticky-btn">
+Buy Now →
+</a>
+
+</div>
 </body>
 </html>
