@@ -180,6 +180,21 @@ header.nav{
 }
 .hamburger span{ width:18px; height:2px; background:var(--text); border-radius:2px; transition:.3s; }
 
+/* ---- Responsive nav: swap links for hamburger below 860px ---- */
+@media (max-width:860px){
+  .nav-links{ display:none; }
+  .hamburger{ display:flex; }
+}
+/* hamburger -> X animation when mobile menu is open */
+.hamburger.active span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
+
+/* On very narrow screens, drop the nav bar's inline CTA so logo + hamburger don't crowd */
+@media (max-width:380px){
+  .nav-cta .btn-primary{ display:none; }
+}
+
 .mobile-menu{
   position:fixed; top:var(--header-h); left:0; right:0; z-index:899;
   background:rgba(10,10,16,0.98); backdrop-filter:blur(20px);
@@ -848,10 +863,13 @@ const hamburgerBtn = document.getElementById('hamburgerBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburgerBtn.addEventListener('click', () => {
   const isOpen = mobileMenu.classList.toggle('open');
+  hamburgerBtn.classList.toggle('active', isOpen);
   hamburgerBtn.setAttribute('aria-expanded', isOpen);
 });
 mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   mobileMenu.classList.remove('open');
+  hamburgerBtn.classList.remove('active');
+  hamburgerBtn.setAttribute('aria-expanded', false);
 }));
 
 /* ---------- SCROLL-REVEAL ANIMATIONS (fade-up / fade-left / fade-right / zoom-in) ---------- */
