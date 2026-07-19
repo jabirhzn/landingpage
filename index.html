@@ -929,43 +929,52 @@ document.querySelectorAll('[data-ripple]').forEach(btn => {
    "time remaining" value, it does NOT reset on refresh.
    Edit the Date() below to change the offer end date.
    ============================================================ */
-const OFFER_END = new Date(2026, 6, 31, 23, 59, 59); // month is 0-indexed: 6 = July
+// 2 Hour Countdown
+const COUNTDOWN_HOURS = 2;
 
-const tDays = document.getElementById('tDays');
-const tHours = document.getElementById('tHours');
-const tMins = document.getElementById('tMins');
-const tSecs = document.getElementById('tSecs');
-const timerUnitsEl = document.getElementById('timerUnits');
-const pbExpiredEl = document.getElementById('pbExpired');
+// Save timer only once
+let endTime = localStorage.getItem("offerEndTime");
 
-function pad(n){ return String(n).padStart(2,'0'); }
-
-function updateCountdown(){
-  const now = new Date();
-  const diff = OFFER_END - now;
-
-  if (diff <= 0){
-    timerUnitsEl.style.display = 'none';
-    pbExpiredEl.style.display = 'block';
-    pbExpiredEl.textContent = 'Offer Ended';
-    document.getElementById('stickyBuyBtn').textContent = 'View Product';
-    clearInterval(countdownInterval);
-    return;
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const mins = Math.floor((diff / (1000 * 60)) % 60);
-  const secs = Math.floor((diff / 1000) % 60);
-
-  tDays.textContent = pad(days);
-  tHours.textContent = pad(hours);
-  tMins.textContent = pad(mins);
-  tSecs.textContent = pad(secs);
+if (!endTime) {
+    endTime = Date.now() + COUNTDOWN_HOURS * 60 * 60 * 1000;
+    localStorage.setItem("offerEndTime", endTime);
 }
-updateCountdown();
-const countdownInterval = setInterval(updateCountdown, 1000);
 
+const tDays = document.getElementById("tDays");
+const tHours = document.getElementById("tHours");
+const tMins = document.getElementById("tMins");
+const tSecs = document.getElementById("tSecs");
+
+function updateCountdown() {
+
+    let distance = endTime - Date.now();
+
+    if (distance <= 0) {
+
+        localStorage.removeItem("offerEndTime");
+
+        document.getElementById("timerUnits").style.display = "none";
+        document.getElementById("pbExpired").style.display = "block";
+        document.getElementById("pbExpired").innerHTML = "Offer Ended";
+
+        clearInterval(timer);
+
+        return;
+    }
+
+    const hours = Math.floor(distance / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    tDays.textContent = "00";
+    tHours.textContent = String(hours).padStart(2, "0");
+    tMins.textContent = String(minutes).padStart(2, "0");
+    tSecs.textContent = String(seconds).padStart(2, "0");
+}
+
+updateCountdown();
+
+const timer = setInterval(updateCountdown, 1000);
 /* ---------- BUY BUTTON PULSE (sticky bar) ---------- */
 setInterval(() => {
   const btn = document.getElementById('stickyBuyBtn');
