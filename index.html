@@ -345,49 +345,67 @@ header.nav{
 @media (max-width:560px){ .features-grid{ grid-template-columns:1fr; } }
 
 /* ============================================================
-   GALLERY
+   GALLERY — Swiper.js premium carousel
    ============================================================ */
-.gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-.gallery-item{
-  position:relative; border-radius:var(--radius-md); overflow:hidden;
-  border:1px solid var(--glass-border); cursor:zoom-in; aspect-ratio:4/3;
+.gallery-swiper{
+  padding:20px 0 56px;
+}
+.gallery-swiper .swiper-slide{
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  aspect-ratio:4/3;
   background:var(--bg-elevated);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-lg);
+  transition:transform .4s var(--ease), opacity .4s var(--ease);
+  opacity:0.45;
+  transform:scale(0.92);
 }
-.gallery-item img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
-.gallery-item:hover img{ transform:scale(1.08); }
-.gallery-overlay{
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(to top, rgba(0,0,0,0.65), transparent 55%);
-  opacity:0; transition:opacity .3s var(--ease);
+.gallery-swiper .swiper-slide-active{
+  opacity:1;
+  transform:scale(1);
 }
-.gallery-item:hover .gallery-overlay{ opacity:1; }
-.gallery-overlay span{
-  position:absolute; bottom:16px; left:16px; font-size:13px; font-weight:700;
-  display:flex; align-items:center; gap:6px;
+.gallery-swiper .swiper-slide img{
+  width:100%; height:100%; object-fit:cover; display:block;
 }
-@media (max-width:800px){ .gallery-grid{ grid-template-columns:1fr 1fr; } }
-@media (max-width:480px){ .gallery-grid{ grid-template-columns:1fr; } }
-
-/* lightbox */
-#lightbox{
-  position:fixed; inset:0; z-index:1100; background:rgba(4,4,8,0.92);
-  display:flex; align-items:center; justify-content:center;
-  opacity:0; visibility:hidden; transition:opacity .3s var(--ease), visibility .3s var(--ease);
-  backdrop-filter:blur(6px);
+.gallery-swiper .swiper-button-next,
+.gallery-swiper .swiper-button-prev{
+  width:52px; height:52px; margin-top:-26px;
+  border-radius:50%;
+  background:var(--glass-strong);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  box-shadow:var(--shadow-lg);
+  color:var(--text);
+  transition:background .25s var(--ease), transform .25s var(--ease);
 }
-#lightbox.open{ opacity:1; visibility:visible; }
-#lightbox img{ max-width:min(88vw,900px); max-height:80vh; border-radius:16px; box-shadow:var(--shadow-lg); }
-.lb-close,.lb-prev,.lb-next{
-  position:absolute; width:46px; height:46px; border-radius:50%;
-  background:var(--glass-strong); border:1px solid var(--glass-border); color:#fff;
-  display:flex; align-items:center; justify-content:center; font-size:20px;
-  transition:background .2s;
+.gallery-swiper .swiper-button-next:hover,
+.gallery-swiper .swiper-button-prev:hover{
+  background:rgba(255,79,163,0.35);
+  transform:translateY(-50%) scale(1.06);
 }
-.lb-close{ top:26px; right:26px; }
-.lb-close:hover,.lb-prev:hover,.lb-next:hover{ background:rgba(255,79,163,0.35); }
-.lb-prev{ left:16px; top:50%; transform:translateY(-50%); }
-.lb-next{ right:16px; top:50%; transform:translateY(-50%); }
-@media (max-width:600px){ .lb-prev,.lb-next{ width:38px; height:38px; } }
+.gallery-swiper .swiper-button-next::after,
+.gallery-swiper .swiper-button-prev::after{
+  font-size:19px; font-weight:900;
+}
+.gallery-swiper .swiper-pagination-bullet{
+  width:9px; height:9px;
+  background:var(--glass-strong);
+  border:1px solid var(--glass-border);
+  opacity:1;
+  transition:.3s var(--ease);
+}
+.gallery-swiper .swiper-pagination-bullet-active{
+  background:var(--pink);
+  width:26px; border-radius:5px;
+}
+@media (max-width:640px){
+  .gallery-swiper .swiper-button-next,
+  .gallery-swiper .swiper-button-prev{ width:40px; height:40px; }
+  .gallery-swiper .swiper-button-next::after,
+  .gallery-swiper .swiper-button-prev::after{ font-size:15px; }
+}
 
 /* ============================================================
    TESTIMONIALS
@@ -538,80 +556,11 @@ footer.site-footer{
   .section{ padding:80px 0; }
   .section-head{ margin-bottom:44px; }
 }
-  /* ===========================
-   AUTO IMAGE CAROUSEL
-=========================== */
-
-.carousel{
-    position:relative;
-    width:100%;
-    overflow:hidden;
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.08);
-    background:#111;
-}
-
-.carousel-track{
-    display:flex;
-    transition:transform .6s ease-in-out;
-}
-
-.carousel-track img{
-    width:100%;
-    flex-shrink:0;
-    display:block;
-    object-fit:cover;
-    aspect-ratio:16/9;
-}
-
-.carousel-btn{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    width:50px;
-    height:50px;
-    border:none;
-    border-radius:50%;
-    background:rgba(0,0,0,.55);
-    color:#fff;
-    font-size:24px;
-    cursor:pointer;
-    z-index:10;
-    transition:.3s;
-}
-
-.carousel-btn:hover{
-    background:#ff4fa3;
-}
-
-.prev{
-    left:20px;
-}
-
-.next{
-    right:20px;
-}
-
-/* Mobile */
-
-@media(max-width:768px){
-
-.carousel-btn{
-    width:40px;
-    height:40px;
-    font-size:20px;
-}
-
-.prev{
-    left:10px;
-}
-
-.next{
-    right:10px;
-}
-
-}
 </style>
+
+<!-- Swiper.js (latest) — used only for the Gallery carousel -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
 </head>
 <body>
 
@@ -732,28 +681,47 @@ footer.site-footer{
     <div class="section-head" data-animate="fade-up">
       <div class="eyebrow">Take a look inside</div>
       <h2 class="headline">A preview of the template packs.</h2>
-      <p class="sub">Click any design to zoom in.</p>
+      <p class="sub">Swipe through a few of the designs inside the pack.</p>
     </div>
 
-   <div class="carousel">
+    <div class="swiper gallery-swiper" data-animate="zoom-in">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img data-src="images/1.jpg" src="images/1.jpg" alt="Social media template preview 1" class="swiper-lazy" loading="lazy">
+          <div class="swiper-lazy-preloader"></div>
+        </div>
+        <div class="swiper-slide">
+          <img data-src="images/2.jpg" src="images/2.jpg" alt="Social media template preview 2" class="swiper-lazy" loading="lazy">
+          <div class="swiper-lazy-preloader"></div>
+        </div>
+        <div class="swiper-slide">
+          <img data-src="images/3.jpg" src="images/3.jpg" alt="Social media template preview 3" class="swiper-lazy" loading="lazy">
+          <div class="swiper-lazy-preloader"></div>
+        </div>
+        <div class="swiper-slide">
+          <img data-src="images/4.jpg" src="images/4.jpg" alt="Social media template preview 4" class="swiper-lazy" loading="lazy">
+          <div class="swiper-lazy-preloader"></div>
+        </div>
+        <div class="swiper-slide">
+          <img data-src="images/5.jpg" src="images/5.jpg" alt="Social media template preview 5" class="swiper-lazy" loading="lazy">
+          <div class="swiper-lazy-preloader"></div>
+        </div>
+        <div class="swiper-slide">
+          <img data-src="images/6.jpg" src="images/6.jpg" alt="Social media template preview 6" class="swiper-lazy" loading="lazy">
+          <div class="swiper-lazy-preloader"></div>
+        </div>
+      </div>
 
-    <button class="carousel-btn prev">&#10094;</button>
+      <!-- Navigation arrows -->
+      <div class="swiper-button-prev" aria-label="Previous slide"></div>
+      <div class="swiper-button-next" aria-label="Next slide"></div>
 
-    <div class="carousel-track">
-        <img src="images/1.jpg" alt="">
-        <img src="images/2.jpg" alt="">
-        <img src="images/3.jpg" alt="">
-        <img src="images/4.jpg" alt="">
-        <img src="images/5.jpg" alt="">
-        <img src="images/6.jpg" alt="">
+      <!-- Pagination dots -->
+      <div class="swiper-pagination"></div>
     </div>
-
-    <button class="carousel-btn next">&#10095;</button>
-
-</div>
-    
   </div>
 </section>
+
 
 <!-- ============ TESTIMONIALS ============ -->
 <section class="section" id="reviews">
@@ -892,13 +860,8 @@ footer.site-footer{
   <div class="pp-text"><b id="ppName">Someone purchased this pack</b><span id="ppTime">2 minutes ago</span></div>
 </div>
 
-<!-- ============ LIGHTBOX ============ -->
-<div id="lightbox">
-  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
-  <button class="lb-prev" id="lbPrev" aria-label="Previous image">‹</button>
-  <img id="lbImg" src="" alt="Product preview enlarged">
-  <button class="lb-next" id="lbNext" aria-label="Next image">›</button>
-</div>
+<!-- Swiper.js (latest) — powers the Gallery carousel only -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
 /* ============================================================
@@ -1083,38 +1046,40 @@ dotsWrap.addEventListener('click', () => {
   testimonialInterval = setInterval(() => goToSlide((currentSlide + 1) % slides), 5000);
 });
 
-/* ---------- AUTO IMAGE CAROUSEL ---------- */
-
-const track = document.querySelector(".carousel-track");
-const slides = document.querySelectorAll(".carousel-track img");
-
-let index = 0;
-
-function showSlide(i){
-
-    if(i >= slides.length){
-        index = 0;
-    }else if(i < 0){
-        index = slides.length - 1;
-    }else{
-        index = i;
-    }
-
-    track.style.transform = `translateX(-${index * 100}%)`;
-}
-
-document.querySelector(".next").addEventListener("click",()=>{
-    showSlide(index + 1);
+/* ---------- GALLERY CAROUSEL (Swiper.js) ---------- */
+const gallerySwiper = new Swiper('.gallery-swiper', {
+  loop: true,
+  speed: 800,
+  centeredSlides: true,
+  grabCursor: true,
+  slidesPerView: 1.15,
+  spaceBetween: 20,
+  autoplay: {
+    delay: 2500,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true
+  },
+  keyboard: {
+    enabled: true,
+    onlyInViewport: true
+  },
+  lazy: {
+    loadPrevNext: true
+  },
+  navigation: {
+    nextEl: '.gallery-swiper .swiper-button-next',
+    prevEl: '.gallery-swiper .swiper-button-prev'
+  },
+  pagination: {
+    el: '.gallery-swiper .swiper-pagination',
+    clickable: true
+  },
+  breakpoints: {
+    640:  { slidesPerView: 1.4, spaceBetween: 24 },
+    900:  { slidesPerView: 2.2, spaceBetween: 28 },
+    1200: { slidesPerView: 2.6, spaceBetween: 32 }
+  }
 });
-
-document.querySelector(".prev").addEventListener("click",()=>{
-    showSlide(index - 1);
-});
-
-setInterval(()=>{
-    showSlide(index + 1);
-},3000);
-
 
 /* ---------- BACK TO TOP BUTTON ---------- */
 const backToTop = document.getElementById('backToTop');
