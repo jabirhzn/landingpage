@@ -956,7 +956,7 @@ document.querySelectorAll('[data-ripple]').forEach(btn => {
    "time remaining" value, it does NOT reset on refresh.
    Edit the Date() below to change the offer end date.
    ============================================================ */
-const OFFER_END = new Date(2026, 6, 31, 23, 59, 59); // month is 0-indexed: 6 = July
+const OFFER_END = new Date(Date.now() + 60 * 60 * 1000); // month is 0-indexed: 6 = July
 
 const tDays = document.getElementById('tDays');
 const tHours = document.getElementById('tHours');
@@ -980,10 +980,10 @@ function updateCountdown(){
     return;
   }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const mins = Math.floor((diff / (1000 * 60)) % 60);
-  const secs = Math.floor((diff / 1000) % 60);
+  const days = 0;
+const hours = Math.floor(diff / (1000 * 60 * 60));
+const mins = Math.floor((diff / (1000 * 60)) % 60);
+const secs = Math.floor((diff / 1000) % 60);
 
   tDays.textContent = pad(days);
   tHours.textContent = pad(hours);
