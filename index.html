@@ -538,6 +538,79 @@ footer.site-footer{
   .section{ padding:80px 0; }
   .section-head{ margin-bottom:44px; }
 }
+  /* ===========================
+   AUTO IMAGE CAROUSEL
+=========================== */
+
+.carousel{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.08);
+    background:#111;
+}
+
+.carousel-track{
+    display:flex;
+    transition:transform .6s ease-in-out;
+}
+
+.carousel-track img{
+    width:100%;
+    flex-shrink:0;
+    display:block;
+    object-fit:cover;
+    aspect-ratio:16/9;
+}
+
+.carousel-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:50px;
+    height:50px;
+    border:none;
+    border-radius:50%;
+    background:rgba(0,0,0,.55);
+    color:#fff;
+    font-size:24px;
+    cursor:pointer;
+    z-index:10;
+    transition:.3s;
+}
+
+.carousel-btn:hover{
+    background:#ff4fa3;
+}
+
+.prev{
+    left:20px;
+}
+
+.next{
+    right:20px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.carousel-btn{
+    width:40px;
+    height:40px;
+    font-size:20px;
+}
+
+.prev{
+    left:10px;
+}
+
+.next{
+    right:10px;
+}
+
+}
 </style>
 </head>
 <body>
