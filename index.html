@@ -1083,35 +1083,38 @@ dotsWrap.addEventListener('click', () => {
   testimonialInterval = setInterval(() => goToSlide((currentSlide + 1) % slides), 5000);
 });
 
-/* ---------- IMAGE GALLERY LIGHTBOX ---------- */
-const galleryItems = [...document.querySelectorAll('.gallery-item')];
-const lightbox = document.getElementById('lightbox');
-const lbImg = document.getElementById('lbImg');
-let lbIndex = 0;
+/* ---------- AUTO IMAGE CAROUSEL ---------- */
 
-function openLightbox(i){
-  lbIndex = i;
-  lbImg.src = galleryItems[i].dataset.full;
-  lbImg.alt = galleryItems[i].dataset.caption || 'Product preview';
-  lightbox.classList.add('open');
+const track = document.querySelector(".carousel-track");
+const slides = document.querySelectorAll(".carousel-track img");
+
+let index = 0;
+
+function showSlide(i){
+
+    if(i >= slides.length){
+        index = 0;
+    }else if(i < 0){
+        index = slides.length - 1;
+    }else{
+        index = i;
+    }
+
+    track.style.transform = `translateX(-${index * 100}%)`;
 }
-function closeLightbox(){ lightbox.classList.remove('open'); }
-function showLightboxImg(step){
-  lbIndex = (lbIndex + step + galleryItems.length) % galleryItems.length;
-  lbImg.src = galleryItems[lbIndex].dataset.full;
-  lbImg.alt = galleryItems[lbIndex].dataset.caption || 'Product preview';
-}
-galleryItems.forEach((item, i) => item.addEventListener('click', () => openLightbox(i)));
-document.getElementById('lbClose').addEventListener('click', closeLightbox);
-document.getElementById('lbPrev').addEventListener('click', () => showLightboxImg(-1));
-document.getElementById('lbNext').addEventListener('click', () => showLightboxImg(1));
-lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', (e) => {
-  if (!lightbox.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft') showLightboxImg(-1);
-  if (e.key === 'ArrowRight') showLightboxImg(1);
+
+document.querySelector(".next").addEventListener("click",()=>{
+    showSlide(index + 1);
 });
+
+document.querySelector(".prev").addEventListener("click",()=>{
+    showSlide(index - 1);
+});
+
+setInterval(()=>{
+    showSlide(index + 1);
+},3000);
+
 
 /* ---------- BACK TO TOP BUTTON ---------- */
 const backToTop = document.getElementById('backToTop');
